@@ -28,6 +28,9 @@ runtime_inspector="$skill_dir/../../scripts/inspect-agent-runtime.sh"
 sh "$runtime_inspector" --primary "$CODEX_THREAD_ID"
 ~~~
 
+The inspector reports the latest applied `turn_id`; a UI change made during a running
+turn becomes runtime evidence only after Codex starts and records the next turn.
+
 Continue without prompting when the result verifies exact Sol / High. If the current
 thread ID is unavailable, inspection fails, or either field differs, stop and tell the
 user to select Sol / High before retrying. Do not accept configured defaults, previous

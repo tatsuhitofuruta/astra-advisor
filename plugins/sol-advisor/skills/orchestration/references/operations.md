@@ -141,11 +141,12 @@ sh "$runtime_inspector" --primary --sessions-dir /absolute/path/to/sessions <pri
 
 Primary mode accepts sessions without auxiliary-only `agent_role` metadata and rejects
 sessions that identify an auxiliary role. It reads the latest `turn_context`, emits
-only the thread ID, model, effort, provider, and working directory, and accepts exact
-`gpt-5.6-sol` / `high` only. Invalid IDs, zero or multiple rollout matches, missing or
-malformed fields, auxiliary roles, and model or effort mismatches fail closed. It does
-not expose prompts, messages, environment variables, tokens, configuration, or
-arbitrary rollout payloads.
+only the thread ID, applied turn ID, model, effort, provider, and working directory,
+and accepts exact `gpt-5.6-sol` / `high` only. The turn ID must be a lowercase UUID. A
+UI change made during a running turn applies only after Codex starts and records the
+next turn. Invalid IDs, zero or multiple rollout matches, missing or malformed fields,
+auxiliary roles, and model or effort mismatches fail closed. It does not expose prompts,
+messages, environment variables, tokens, configuration, or arbitrary rollout payloads.
 
 If host metadata and local inspection cannot verify the requirement, stop. Configured
 defaults, previous threads, auxiliary metadata, and manual attestation do not prove

@@ -110,11 +110,13 @@ IFS= read -r rollout_file < "$matches_file" || fail "could not read the matched 
 [ -f "$rollout_file" ] || fail "matched rollout is unavailable."
 
 # Primary sessions omit auxiliary-only role metadata. Read the latest turn so an
-# in-thread model change supersedes older evidence. Emit only five allowlisted fields.
+# in-thread model change supersedes older evidence. Emit only six allowlisted fields.
 if [ "$primary" = true ]; then
   if ! primary_output=$(jq -ce -s --arg expected_thread_id "$thread_id" '
     def string_or_null:
       if type == "string" then . else null end;
+    def lowercase_uuid:
+      type == "string" and test("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$");
 
     [ .[] | select(.type == "session_meta") | .payload ] as $sessions |
     [ .[] | select(.type == "turn_context") | .payload ] as $turns |
@@ -127,6 +129,7 @@ if [ "$primary" = true ]; then
       $turns[-1] as $latest |
       ($session.id? | string_or_null) as $session_thread_id |
       ($session.agent_role? | string_or_null) as $agent_role |
+      ($latest.turn_id? | string_or_null) as $turn_id |
       ($latest.model? | string_or_null) as $model |
       ($latest.effort? | string_or_null) as $effort |
       (($latest.model_provider? // $session.model_provider?) | string_or_null) as $model_provider |
@@ -135,6 +138,8 @@ if [ "$primary" = true ]; then
         error("session metadata does not identify the requested thread")
       elif $agent_role != null and $agent_role != "" then
         error("session metadata identifies an auxiliary role")
+      elif ($turn_id | lowercase_uuid | not) then
+        error("missing or invalid current turn id")
       elif $model == null or $model == "" then
         error("missing model")
       elif $effort == null or $effort == "" then
@@ -146,6 +151,7 @@ if [ "$primary" = true ]; then
       else
         {
           thread_id: $session_thread_id,
+          turn_id: $turn_id,
           model: $model,
           effort: $effort,
           model_provider: $model_provider,
