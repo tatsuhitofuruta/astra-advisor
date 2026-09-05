@@ -1,0 +1,34 @@
+{
+  "name": "astra-advisor",
+  "version": "0.1.0",
+  "description": "Astra-led coding with selective Sol delegation and worker continuity.",
+  "author": {
+    "name": "tatsuhitofuruta",
+    "url": "https://github.com/tatsuhitofuruta"
+  },
+  "homepage": "https://github.com/tatsuhitofuruta/astra-advisor#readme",
+  "repository": "https://github.com/tatsuhitofuruta/astra-advisor",
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "orchestration",
+    "multi-agent",
+    "gpt-6-astra"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Astra Advisor",
+    "shortDescription": "Keep Astra on decisions; delegate substantial implementation to Sol.",
+    "longDescription": "Astra Advisor keeps small and context-coupled work in the primary Astra session. It delegates substantial bounded implementation to one Sol worker, reuses that worker for related fixes, and adds independent review only when requested or justified. Derived from Sol Advisor.",
+    "developerName": "tatsuhitofuruta",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/tatsuhitofuruta/astra-advisor",
+    "defaultPrompt": [
+      "Use $astra-advisor:orchestration to implement this feature and verify the result."
+    ]
+  }
+}

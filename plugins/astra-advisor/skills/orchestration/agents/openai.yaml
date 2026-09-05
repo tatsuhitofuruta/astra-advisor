@@ -1,0 +1,4 @@
+interface:
+  display_name: "Astra Advisor Orchestration"
+  short_description: "Astra decisions, selective Sol implementation"
+  default_prompt: "Use $orchestration to deliver this change, keeping small work local and delegating substantial implementation to Sol."

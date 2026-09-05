@@ -1,14 +1,14 @@
 {
-  "name": "sol-advisor",
+  "name": "astra-advisor",
   "interface": {
-    "displayName": "Sol Advisor"
+    "displayName": "Astra Advisor"
   },
   "plugins": [
     {
-      "name": "sol-advisor",
+      "name": "astra-advisor",
       "source": {
         "source": "local",
-        "path": "./plugins/sol-advisor"
+        "path": "./plugins/astra-advisor"
       },
       "policy": {
         "installation": "AVAILABLE",
